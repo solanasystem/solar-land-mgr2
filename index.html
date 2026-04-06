@@ -1758,40 +1758,36 @@ URL: ${url}
     statusEl.textContent = '✅ 解析完了！内容を確認してください';
 
     // 確認フォームを表示
-    resultEl.innerHTML = `
-      <div style="margin-top:16px;padding:16px;background:var(--bg2);border-radius:10px;border:1px solid var(--border)">
-        <div style="font-size:13px;font-weight:700;color:var(--accent2);margin-bottom:12px">📋 読み取った物件情報（修正可能）</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          ${fieldRow('案件番号', 'imp_case_no', '', 'SL-2025-XXX（手動入力）')}
-          ${fieldRow('発電区分', 'imp_kubun', parsed.kubun||'低圧蓄電池', null, ['低圧太陽光','高圧太陽光','低圧蓄電池','高圧蓄電池'])}
-          ${fieldRow('ステータス', 'imp_status', 'Thinking→', null, ['Success','OK','Thinking↑','Thinking→','Thinking↓','NG','NON MEET','UNKNOWN'])}
-          ${fieldRow('エリア', 'imp_area', parsed.area||'', null, ['関東','中部','北陸','関西','中国','四国','九州'])}
-          ${fieldRow('不動産会社名', 'imp_company', parsed.real_estate_company||'')}
-          ${fieldRow('会社TEL', 'imp_tel', parsed.tel||'')}
-          ${fieldRow('会社住所', 'imp_address', parsed.address||'')}
-          ${fieldRow('土地所在地', 'imp_land_address', parsed.land_address||'')}
-          ${fieldRow('地番', 'imp_land_no', parsed.land_no||'')}
-          ${fieldRow('地目', 'imp_land_type', parsed.land_type||'')}
-          ${fieldRow('登記面積(㎡)', 'imp_reg_area', parsed.reg_area||'')}
-          ${fieldRow('用途地域', 'imp_youto', parsed.youto||'')}
-          ${fieldRow('農地区分', 'imp_nochi_kubun', parsed.nochi_kubun||'')}
-          ${fieldRow('接道状況', 'imp_setsu', parsed.setsu||'')}
-          ${fieldRow('ハザード', 'imp_hazard', parsed.hazard||'')}
-          ${fieldRow('GoogleMap URL', 'imp_gmap', parsed.gmap||'')}
-        </div>
-        <div style="margin-top:10px">
-          <label style="font-size:11px;color:var(--text3)">備考</label>
-          <textarea id="imp_bikou" style="width:100%;margin-top:4px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:12px;min-height:60px">${parsed.bikou||''}</textarea>
-        </div>
-        <div style="margin-top:10px">
-          <label style="font-size:11px;color:var(--text3)">参照URL</label>
-          <input id="imp_gmap_link" value="${url}" style="width:100%;margin-top:4px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:12px">
-        </div>
-        <div style="margin-top:16px;display:flex;gap:10px;justify-content:flex-end">
-          <button class="btn btn-outline" onclick="closeUrlImport()">キャンセル</button>
-          <button class="btn btn-primary" onclick="saveImportedRecord()">✅ この内容で登録する</button>
-        </div>
-      </div>`;
+    var rows = '';
+    rows += fieldRow('案件番号', 'imp_case_no', '', 'SL-2025-XXX（手動入力）');
+    rows += fieldRow('発電区分', 'imp_kubun', parsed.kubun||'低圧蓄電池', null, ['低圧太陽光','高圧太陽光','低圧蓄電池','高圧蓄電池']);
+    rows += fieldRow('ステータス', 'imp_status', 'Thinking→', null, ['Success','OK','Thinking↑','Thinking→','Thinking↓','NG','NON MEET','UNKNOWN']);
+    rows += fieldRow('エリア', 'imp_area', parsed.area||'', null, ['関東','中部','北陸','関西','中国','四国','九州']);
+    rows += fieldRow('不動産会社名', 'imp_company', parsed.real_estate_company||'');
+    rows += fieldRow('会社TEL', 'imp_tel', parsed.tel||'');
+    rows += fieldRow('会社住所', 'imp_address', parsed.address||'');
+    rows += fieldRow('土地所在地', 'imp_land_address', parsed.land_address||'');
+    rows += fieldRow('地番', 'imp_land_no', parsed.land_no||'');
+    rows += fieldRow('地目', 'imp_land_type', parsed.land_type||'');
+    rows += fieldRow('登記面積(㎡)', 'imp_reg_area', parsed.reg_area||'');
+    rows += fieldRow('用途地域', 'imp_youto', parsed.youto||'');
+    rows += fieldRow('農地区分', 'imp_nochi_kubun', parsed.nochi_kubun||'');
+    rows += fieldRow('接道状況', 'imp_setsu', parsed.setsu||'');
+    rows += fieldRow('ハザード', 'imp_hazard', parsed.hazard||'');
+    rows += fieldRow('GoogleMap URL', 'imp_gmap', parsed.gmap||'');
+    var bikou = (parsed.bikou||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    var safeUrl = (url||'').replace(/"/g,'&quot;');
+    resultEl.innerHTML = '<div style="margin-top:16px;padding:16px;background:var(--bg2);border-radius:10px;border:1px solid var(--border)">'
+      + '<div style="font-size:13px;font-weight:700;color:var(--accent2);margin-bottom:12px">📋 読み取った物件情報（修正可能）</div>'
+      + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">' + rows + '</div>'
+      + '<div style="margin-top:10px"><label style="font-size:11px;color:var(--text3)">備考</label>'
+      + '<textarea id="imp_bikou" style="width:100%;margin-top:4px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:12px;min-height:60px">' + bikou + '</textarea></div>'
+      + '<div style="margin-top:10px"><label style="font-size:11px;color:var(--text3)">参照URL</label>'
+      + '<input id="imp_gmap_link" value="' + safeUrl + '" style="width:100%;margin-top:4px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:12px"></div>'
+      + '<div style="margin-top:16px;display:flex;gap:10px;justify-content:flex-end">'
+      + '<button class="btn btn-outline" onclick="closeUrlImport()">キャンセル</button>'
+      + '<button class="btn btn-primary" onclick="saveImportedRecord()">✅ この内容で登録する</button>'
+      + '</div></div>';
 
   } catch(e) {
     statusEl.textContent = '❌ エラー: ' + e.message;
@@ -2726,40 +2722,36 @@ URL: ${url}
     statusEl.textContent = '✅ 解析完了！内容を確認してください';
 
     // 確認フォームを表示
-    resultEl.innerHTML = `
-      <div style="margin-top:16px;padding:16px;background:var(--bg2);border-radius:10px;border:1px solid var(--border)">
-        <div style="font-size:13px;font-weight:700;color:var(--accent2);margin-bottom:12px">📋 読み取った物件情報（修正可能）</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          ${fieldRow('案件番号', 'imp_case_no', '', 'SL-2025-XXX（手動入力）')}
-          ${fieldRow('発電区分', 'imp_kubun', parsed.kubun||'低圧蓄電池', null, ['低圧太陽光','高圧太陽光','低圧蓄電池','高圧蓄電池'])}
-          ${fieldRow('ステータス', 'imp_status', 'Thinking→', null, ['Success','OK','Thinking↑','Thinking→','Thinking↓','NG','NON MEET','UNKNOWN'])}
-          ${fieldRow('エリア', 'imp_area', parsed.area||'', null, ['関東','中部','北陸','関西','中国','四国','九州'])}
-          ${fieldRow('不動産会社名', 'imp_company', parsed.real_estate_company||'')}
-          ${fieldRow('会社TEL', 'imp_tel', parsed.tel||'')}
-          ${fieldRow('会社住所', 'imp_address', parsed.address||'')}
-          ${fieldRow('土地所在地', 'imp_land_address', parsed.land_address||'')}
-          ${fieldRow('地番', 'imp_land_no', parsed.land_no||'')}
-          ${fieldRow('地目', 'imp_land_type', parsed.land_type||'')}
-          ${fieldRow('登記面積(㎡)', 'imp_reg_area', parsed.reg_area||'')}
-          ${fieldRow('用途地域', 'imp_youto', parsed.youto||'')}
-          ${fieldRow('農地区分', 'imp_nochi_kubun', parsed.nochi_kubun||'')}
-          ${fieldRow('接道状況', 'imp_setsu', parsed.setsu||'')}
-          ${fieldRow('ハザード', 'imp_hazard', parsed.hazard||'')}
-          ${fieldRow('GoogleMap URL', 'imp_gmap', parsed.gmap||'')}
-        </div>
-        <div style="margin-top:10px">
-          <label style="font-size:11px;color:var(--text3)">備考</label>
-          <textarea id="imp_bikou" style="width:100%;margin-top:4px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:12px;min-height:60px">${parsed.bikou||''}</textarea>
-        </div>
-        <div style="margin-top:10px">
-          <label style="font-size:11px;color:var(--text3)">参照URL</label>
-          <input id="imp_gmap_link" value="${url}" style="width:100%;margin-top:4px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:12px">
-        </div>
-        <div style="margin-top:16px;display:flex;gap:10px;justify-content:flex-end">
-          <button class="btn btn-outline" onclick="closeUrlImport()">キャンセル</button>
-          <button class="btn btn-primary" onclick="saveImportedRecord()">✅ この内容で登録する</button>
-        </div>
-      </div>`;
+    var rows = '';
+    rows += fieldRow('案件番号', 'imp_case_no', '', 'SL-2025-XXX（手動入力）');
+    rows += fieldRow('発電区分', 'imp_kubun', parsed.kubun||'低圧蓄電池', null, ['低圧太陽光','高圧太陽光','低圧蓄電池','高圧蓄電池']);
+    rows += fieldRow('ステータス', 'imp_status', 'Thinking→', null, ['Success','OK','Thinking↑','Thinking→','Thinking↓','NG','NON MEET','UNKNOWN']);
+    rows += fieldRow('エリア', 'imp_area', parsed.area||'', null, ['関東','中部','北陸','関西','中国','四国','九州']);
+    rows += fieldRow('不動産会社名', 'imp_company', parsed.real_estate_company||'');
+    rows += fieldRow('会社TEL', 'imp_tel', parsed.tel||'');
+    rows += fieldRow('会社住所', 'imp_address', parsed.address||'');
+    rows += fieldRow('土地所在地', 'imp_land_address', parsed.land_address||'');
+    rows += fieldRow('地番', 'imp_land_no', parsed.land_no||'');
+    rows += fieldRow('地目', 'imp_land_type', parsed.land_type||'');
+    rows += fieldRow('登記面積(㎡)', 'imp_reg_area', parsed.reg_area||'');
+    rows += fieldRow('用途地域', 'imp_youto', parsed.youto||'');
+    rows += fieldRow('農地区分', 'imp_nochi_kubun', parsed.nochi_kubun||'');
+    rows += fieldRow('接道状況', 'imp_setsu', parsed.setsu||'');
+    rows += fieldRow('ハザード', 'imp_hazard', parsed.hazard||'');
+    rows += fieldRow('GoogleMap URL', 'imp_gmap', parsed.gmap||'');
+    var bikou = (parsed.bikou||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    var safeUrl = (url||'').replace(/"/g,'&quot;');
+    resultEl.innerHTML = '<div style="margin-top:16px;padding:16px;background:var(--bg2);border-radius:10px;border:1px solid var(--border)">'
+      + '<div style="font-size:13px;font-weight:700;color:var(--accent2);margin-bottom:12px">📋 読み取った物件情報（修正可能）</div>'
+      + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">' + rows + '</div>'
+      + '<div style="margin-top:10px"><label style="font-size:11px;color:var(--text3)">備考</label>'
+      + '<textarea id="imp_bikou" style="width:100%;margin-top:4px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:12px;min-height:60px">' + bikou + '</textarea></div>'
+      + '<div style="margin-top:10px"><label style="font-size:11px;color:var(--text3)">参照URL</label>'
+      + '<input id="imp_gmap_link" value="' + safeUrl + '" style="width:100%;margin-top:4px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:12px"></div>'
+      + '<div style="margin-top:16px;display:flex;gap:10px;justify-content:flex-end">'
+      + '<button class="btn btn-outline" onclick="closeUrlImport()">キャンセル</button>'
+      + '<button class="btn btn-primary" onclick="saveImportedRecord()">✅ この内容で登録する</button>'
+      + '</div></div>';
 
   } catch(e) {
     statusEl.textContent = '❌ エラー: ' + e.message;
@@ -3648,40 +3640,36 @@ URL: ${url}
     statusEl.textContent = '✅ 解析完了！内容を確認してください';
 
     // 確認フォームを表示
-    resultEl.innerHTML = `
-      <div style="margin-top:16px;padding:16px;background:var(--bg2);border-radius:10px;border:1px solid var(--border)">
-        <div style="font-size:13px;font-weight:700;color:var(--accent2);margin-bottom:12px">📋 読み取った物件情報（修正可能）</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          ${fieldRow('案件番号', 'imp_case_no', '', 'SL-2025-XXX（手動入力）')}
-          ${fieldRow('発電区分', 'imp_kubun', parsed.kubun||'低圧蓄電池', null, ['低圧太陽光','高圧太陽光','低圧蓄電池','高圧蓄電池'])}
-          ${fieldRow('ステータス', 'imp_status', 'Thinking→', null, ['Success','OK','Thinking↑','Thinking→','Thinking↓','NG','NON MEET','UNKNOWN'])}
-          ${fieldRow('エリア', 'imp_area', parsed.area||'', null, ['関東','中部','北陸','関西','中国','四国','九州'])}
-          ${fieldRow('不動産会社名', 'imp_company', parsed.real_estate_company||'')}
-          ${fieldRow('会社TEL', 'imp_tel', parsed.tel||'')}
-          ${fieldRow('会社住所', 'imp_address', parsed.address||'')}
-          ${fieldRow('土地所在地', 'imp_land_address', parsed.land_address||'')}
-          ${fieldRow('地番', 'imp_land_no', parsed.land_no||'')}
-          ${fieldRow('地目', 'imp_land_type', parsed.land_type||'')}
-          ${fieldRow('登記面積(㎡)', 'imp_reg_area', parsed.reg_area||'')}
-          ${fieldRow('用途地域', 'imp_youto', parsed.youto||'')}
-          ${fieldRow('農地区分', 'imp_nochi_kubun', parsed.nochi_kubun||'')}
-          ${fieldRow('接道状況', 'imp_setsu', parsed.setsu||'')}
-          ${fieldRow('ハザード', 'imp_hazard', parsed.hazard||'')}
-          ${fieldRow('GoogleMap URL', 'imp_gmap', parsed.gmap||'')}
-        </div>
-        <div style="margin-top:10px">
-          <label style="font-size:11px;color:var(--text3)">備考</label>
-          <textarea id="imp_bikou" style="width:100%;margin-top:4px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:12px;min-height:60px">${parsed.bikou||''}</textarea>
-        </div>
-        <div style="margin-top:10px">
-          <label style="font-size:11px;color:var(--text3)">参照URL</label>
-          <input id="imp_gmap_link" value="${url}" style="width:100%;margin-top:4px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:12px">
-        </div>
-        <div style="margin-top:16px;display:flex;gap:10px;justify-content:flex-end">
-          <button class="btn btn-outline" onclick="closeUrlImport()">キャンセル</button>
-          <button class="btn btn-primary" onclick="saveImportedRecord()">✅ この内容で登録する</button>
-        </div>
-      </div>`;
+    var rows = '';
+    rows += fieldRow('案件番号', 'imp_case_no', '', 'SL-2025-XXX（手動入力）');
+    rows += fieldRow('発電区分', 'imp_kubun', parsed.kubun||'低圧蓄電池', null, ['低圧太陽光','高圧太陽光','低圧蓄電池','高圧蓄電池']);
+    rows += fieldRow('ステータス', 'imp_status', 'Thinking→', null, ['Success','OK','Thinking↑','Thinking→','Thinking↓','NG','NON MEET','UNKNOWN']);
+    rows += fieldRow('エリア', 'imp_area', parsed.area||'', null, ['関東','中部','北陸','関西','中国','四国','九州']);
+    rows += fieldRow('不動産会社名', 'imp_company', parsed.real_estate_company||'');
+    rows += fieldRow('会社TEL', 'imp_tel', parsed.tel||'');
+    rows += fieldRow('会社住所', 'imp_address', parsed.address||'');
+    rows += fieldRow('土地所在地', 'imp_land_address', parsed.land_address||'');
+    rows += fieldRow('地番', 'imp_land_no', parsed.land_no||'');
+    rows += fieldRow('地目', 'imp_land_type', parsed.land_type||'');
+    rows += fieldRow('登記面積(㎡)', 'imp_reg_area', parsed.reg_area||'');
+    rows += fieldRow('用途地域', 'imp_youto', parsed.youto||'');
+    rows += fieldRow('農地区分', 'imp_nochi_kubun', parsed.nochi_kubun||'');
+    rows += fieldRow('接道状況', 'imp_setsu', parsed.setsu||'');
+    rows += fieldRow('ハザード', 'imp_hazard', parsed.hazard||'');
+    rows += fieldRow('GoogleMap URL', 'imp_gmap', parsed.gmap||'');
+    var bikou = (parsed.bikou||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    var safeUrl = (url||'').replace(/"/g,'&quot;');
+    resultEl.innerHTML = '<div style="margin-top:16px;padding:16px;background:var(--bg2);border-radius:10px;border:1px solid var(--border)">'
+      + '<div style="font-size:13px;font-weight:700;color:var(--accent2);margin-bottom:12px">📋 読み取った物件情報（修正可能）</div>'
+      + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">' + rows + '</div>'
+      + '<div style="margin-top:10px"><label style="font-size:11px;color:var(--text3)">備考</label>'
+      + '<textarea id="imp_bikou" style="width:100%;margin-top:4px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:12px;min-height:60px">' + bikou + '</textarea></div>'
+      + '<div style="margin-top:10px"><label style="font-size:11px;color:var(--text3)">参照URL</label>'
+      + '<input id="imp_gmap_link" value="' + safeUrl + '" style="width:100%;margin-top:4px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:12px"></div>'
+      + '<div style="margin-top:16px;display:flex;gap:10px;justify-content:flex-end">'
+      + '<button class="btn btn-outline" onclick="closeUrlImport()">キャンセル</button>'
+      + '<button class="btn btn-primary" onclick="saveImportedRecord()">✅ この内容で登録する</button>'
+      + '</div></div>';
 
   } catch(e) {
     statusEl.textContent = '❌ エラー: ' + e.message;
@@ -4594,40 +4582,36 @@ URL: ${url}
     statusEl.textContent = '✅ 解析完了！内容を確認してください';
 
     // 確認フォームを表示
-    resultEl.innerHTML = `
-      <div style="margin-top:16px;padding:16px;background:var(--bg2);border-radius:10px;border:1px solid var(--border)">
-        <div style="font-size:13px;font-weight:700;color:var(--accent2);margin-bottom:12px">📋 読み取った物件情報（修正可能）</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          ${fieldRow('案件番号', 'imp_case_no', '', 'SL-2025-XXX（手動入力）')}
-          ${fieldRow('発電区分', 'imp_kubun', parsed.kubun||'低圧蓄電池', null, ['低圧太陽光','高圧太陽光','低圧蓄電池','高圧蓄電池'])}
-          ${fieldRow('ステータス', 'imp_status', 'Thinking→', null, ['Success','OK','Thinking↑','Thinking→','Thinking↓','NG','NON MEET','UNKNOWN'])}
-          ${fieldRow('エリア', 'imp_area', parsed.area||'', null, ['関東','中部','北陸','関西','中国','四国','九州'])}
-          ${fieldRow('不動産会社名', 'imp_company', parsed.real_estate_company||'')}
-          ${fieldRow('会社TEL', 'imp_tel', parsed.tel||'')}
-          ${fieldRow('会社住所', 'imp_address', parsed.address||'')}
-          ${fieldRow('土地所在地', 'imp_land_address', parsed.land_address||'')}
-          ${fieldRow('地番', 'imp_land_no', parsed.land_no||'')}
-          ${fieldRow('地目', 'imp_land_type', parsed.land_type||'')}
-          ${fieldRow('登記面積(㎡)', 'imp_reg_area', parsed.reg_area||'')}
-          ${fieldRow('用途地域', 'imp_youto', parsed.youto||'')}
-          ${fieldRow('農地区分', 'imp_nochi_kubun', parsed.nochi_kubun||'')}
-          ${fieldRow('接道状況', 'imp_setsu', parsed.setsu||'')}
-          ${fieldRow('ハザード', 'imp_hazard', parsed.hazard||'')}
-          ${fieldRow('GoogleMap URL', 'imp_gmap', parsed.gmap||'')}
-        </div>
-        <div style="margin-top:10px">
-          <label style="font-size:11px;color:var(--text3)">備考</label>
-          <textarea id="imp_bikou" style="width:100%;margin-top:4px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:12px;min-height:60px">${parsed.bikou||''}</textarea>
-        </div>
-        <div style="margin-top:10px">
-          <label style="font-size:11px;color:var(--text3)">参照URL</label>
-          <input id="imp_gmap_link" value="${url}" style="width:100%;margin-top:4px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:12px">
-        </div>
-        <div style="margin-top:16px;display:flex;gap:10px;justify-content:flex-end">
-          <button class="btn btn-outline" onclick="closeUrlImport()">キャンセル</button>
-          <button class="btn btn-primary" onclick="saveImportedRecord()">✅ この内容で登録する</button>
-        </div>
-      </div>`;
+    var rows = '';
+    rows += fieldRow('案件番号', 'imp_case_no', '', 'SL-2025-XXX（手動入力）');
+    rows += fieldRow('発電区分', 'imp_kubun', parsed.kubun||'低圧蓄電池', null, ['低圧太陽光','高圧太陽光','低圧蓄電池','高圧蓄電池']);
+    rows += fieldRow('ステータス', 'imp_status', 'Thinking→', null, ['Success','OK','Thinking↑','Thinking→','Thinking↓','NG','NON MEET','UNKNOWN']);
+    rows += fieldRow('エリア', 'imp_area', parsed.area||'', null, ['関東','中部','北陸','関西','中国','四国','九州']);
+    rows += fieldRow('不動産会社名', 'imp_company', parsed.real_estate_company||'');
+    rows += fieldRow('会社TEL', 'imp_tel', parsed.tel||'');
+    rows += fieldRow('会社住所', 'imp_address', parsed.address||'');
+    rows += fieldRow('土地所在地', 'imp_land_address', parsed.land_address||'');
+    rows += fieldRow('地番', 'imp_land_no', parsed.land_no||'');
+    rows += fieldRow('地目', 'imp_land_type', parsed.land_type||'');
+    rows += fieldRow('登記面積(㎡)', 'imp_reg_area', parsed.reg_area||'');
+    rows += fieldRow('用途地域', 'imp_youto', parsed.youto||'');
+    rows += fieldRow('農地区分', 'imp_nochi_kubun', parsed.nochi_kubun||'');
+    rows += fieldRow('接道状況', 'imp_setsu', parsed.setsu||'');
+    rows += fieldRow('ハザード', 'imp_hazard', parsed.hazard||'');
+    rows += fieldRow('GoogleMap URL', 'imp_gmap', parsed.gmap||'');
+    var bikou = (parsed.bikou||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    var safeUrl = (url||'').replace(/"/g,'&quot;');
+    resultEl.innerHTML = '<div style="margin-top:16px;padding:16px;background:var(--bg2);border-radius:10px;border:1px solid var(--border)">'
+      + '<div style="font-size:13px;font-weight:700;color:var(--accent2);margin-bottom:12px">📋 読み取った物件情報（修正可能）</div>'
+      + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">' + rows + '</div>'
+      + '<div style="margin-top:10px"><label style="font-size:11px;color:var(--text3)">備考</label>'
+      + '<textarea id="imp_bikou" style="width:100%;margin-top:4px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:12px;min-height:60px">' + bikou + '</textarea></div>'
+      + '<div style="margin-top:10px"><label style="font-size:11px;color:var(--text3)">参照URL</label>'
+      + '<input id="imp_gmap_link" value="' + safeUrl + '" style="width:100%;margin-top:4px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:12px"></div>'
+      + '<div style="margin-top:16px;display:flex;gap:10px;justify-content:flex-end">'
+      + '<button class="btn btn-outline" onclick="closeUrlImport()">キャンセル</button>'
+      + '<button class="btn btn-primary" onclick="saveImportedRecord()">✅ この内容で登録する</button>'
+      + '</div></div>';
 
   } catch(e) {
     statusEl.textContent = '❌ エラー: ' + e.message;
@@ -5546,40 +5530,36 @@ URL: ${url}
     statusEl.textContent = '✅ 解析完了！内容を確認してください';
 
     // 確認フォームを表示
-    resultEl.innerHTML = `
-      <div style="margin-top:16px;padding:16px;background:var(--bg2);border-radius:10px;border:1px solid var(--border)">
-        <div style="font-size:13px;font-weight:700;color:var(--accent2);margin-bottom:12px">📋 読み取った物件情報（修正可能）</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          ${fieldRow('案件番号', 'imp_case_no', '', 'SL-2025-XXX（手動入力）')}
-          ${fieldRow('発電区分', 'imp_kubun', parsed.kubun||'低圧蓄電池', null, ['低圧太陽光','高圧太陽光','低圧蓄電池','高圧蓄電池'])}
-          ${fieldRow('ステータス', 'imp_status', 'Thinking→', null, ['Success','OK','Thinking↑','Thinking→','Thinking↓','NG','NON MEET','UNKNOWN'])}
-          ${fieldRow('エリア', 'imp_area', parsed.area||'', null, ['関東','中部','北陸','関西','中国','四国','九州'])}
-          ${fieldRow('不動産会社名', 'imp_company', parsed.real_estate_company||'')}
-          ${fieldRow('会社TEL', 'imp_tel', parsed.tel||'')}
-          ${fieldRow('会社住所', 'imp_address', parsed.address||'')}
-          ${fieldRow('土地所在地', 'imp_land_address', parsed.land_address||'')}
-          ${fieldRow('地番', 'imp_land_no', parsed.land_no||'')}
-          ${fieldRow('地目', 'imp_land_type', parsed.land_type||'')}
-          ${fieldRow('登記面積(㎡)', 'imp_reg_area', parsed.reg_area||'')}
-          ${fieldRow('用途地域', 'imp_youto', parsed.youto||'')}
-          ${fieldRow('農地区分', 'imp_nochi_kubun', parsed.nochi_kubun||'')}
-          ${fieldRow('接道状況', 'imp_setsu', parsed.setsu||'')}
-          ${fieldRow('ハザード', 'imp_hazard', parsed.hazard||'')}
-          ${fieldRow('GoogleMap URL', 'imp_gmap', parsed.gmap||'')}
-        </div>
-        <div style="margin-top:10px">
-          <label style="font-size:11px;color:var(--text3)">備考</label>
-          <textarea id="imp_bikou" style="width:100%;margin-top:4px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:12px;min-height:60px">${parsed.bikou||''}</textarea>
-        </div>
-        <div style="margin-top:10px">
-          <label style="font-size:11px;color:var(--text3)">参照URL</label>
-          <input id="imp_gmap_link" value="${url}" style="width:100%;margin-top:4px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:12px">
-        </div>
-        <div style="margin-top:16px;display:flex;gap:10px;justify-content:flex-end">
-          <button class="btn btn-outline" onclick="closeUrlImport()">キャンセル</button>
-          <button class="btn btn-primary" onclick="saveImportedRecord()">✅ この内容で登録する</button>
-        </div>
-      </div>`;
+    var rows = '';
+    rows += fieldRow('案件番号', 'imp_case_no', '', 'SL-2025-XXX（手動入力）');
+    rows += fieldRow('発電区分', 'imp_kubun', parsed.kubun||'低圧蓄電池', null, ['低圧太陽光','高圧太陽光','低圧蓄電池','高圧蓄電池']);
+    rows += fieldRow('ステータス', 'imp_status', 'Thinking→', null, ['Success','OK','Thinking↑','Thinking→','Thinking↓','NG','NON MEET','UNKNOWN']);
+    rows += fieldRow('エリア', 'imp_area', parsed.area||'', null, ['関東','中部','北陸','関西','中国','四国','九州']);
+    rows += fieldRow('不動産会社名', 'imp_company', parsed.real_estate_company||'');
+    rows += fieldRow('会社TEL', 'imp_tel', parsed.tel||'');
+    rows += fieldRow('会社住所', 'imp_address', parsed.address||'');
+    rows += fieldRow('土地所在地', 'imp_land_address', parsed.land_address||'');
+    rows += fieldRow('地番', 'imp_land_no', parsed.land_no||'');
+    rows += fieldRow('地目', 'imp_land_type', parsed.land_type||'');
+    rows += fieldRow('登記面積(㎡)', 'imp_reg_area', parsed.reg_area||'');
+    rows += fieldRow('用途地域', 'imp_youto', parsed.youto||'');
+    rows += fieldRow('農地区分', 'imp_nochi_kubun', parsed.nochi_kubun||'');
+    rows += fieldRow('接道状況', 'imp_setsu', parsed.setsu||'');
+    rows += fieldRow('ハザード', 'imp_hazard', parsed.hazard||'');
+    rows += fieldRow('GoogleMap URL', 'imp_gmap', parsed.gmap||'');
+    var bikou = (parsed.bikou||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    var safeUrl = (url||'').replace(/"/g,'&quot;');
+    resultEl.innerHTML = '<div style="margin-top:16px;padding:16px;background:var(--bg2);border-radius:10px;border:1px solid var(--border)">'
+      + '<div style="font-size:13px;font-weight:700;color:var(--accent2);margin-bottom:12px">📋 読み取った物件情報（修正可能）</div>'
+      + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">' + rows + '</div>'
+      + '<div style="margin-top:10px"><label style="font-size:11px;color:var(--text3)">備考</label>'
+      + '<textarea id="imp_bikou" style="width:100%;margin-top:4px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:12px;min-height:60px">' + bikou + '</textarea></div>'
+      + '<div style="margin-top:10px"><label style="font-size:11px;color:var(--text3)">参照URL</label>'
+      + '<input id="imp_gmap_link" value="' + safeUrl + '" style="width:100%;margin-top:4px;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px;font-size:12px"></div>'
+      + '<div style="margin-top:16px;display:flex;gap:10px;justify-content:flex-end">'
+      + '<button class="btn btn-outline" onclick="closeUrlImport()">キャンセル</button>'
+      + '<button class="btn btn-primary" onclick="saveImportedRecord()">✅ この内容で登録する</button>'
+      + '</div></div>';
 
   } catch(e) {
     statusEl.textContent = '❌ エラー: ' + e.message;
