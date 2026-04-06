@@ -986,52 +986,24 @@ function addHazardControl(map) {
     var div = L.DomUtil.create('div', '');
     div.style.cssText = 'background:rgba(10,14,26,.92);border:1px solid #1e2d45;border-radius:10px;padding:10px 12px;min-width:170px;backdrop-filter:blur(8px);user-select:none';
     var lid = map._leaflet_id;
-    div.innerHTML = `
-      <div style="font-size:10px;color:#00d4ff;font-weight:700;letter-spacing:1px;margin-bottom:8px;border-bottom:1px solid #1e2d45;padding-bottom:6px">🗺 レイヤー切替</div>
-      <div style="font-size:9px;color:#64748b;margin-bottom:5px;font-weight:700">── 地図タイプ ──</div>
-      <div style="display:flex;gap:4px;margin-bottom:8px">
-        <button id="btn-normal-${lid}" onclick="switchBase(${lid},'normal')"
-          style="flex:1;padding:4px;font-size:10px;border-radius:5px;border:1px solid #1e2d45;background:#1a2235;color:#94a3b8;cursor:pointer;font-family:'Noto Sans JP',sans-serif">
-          🗺 標準
-        </button>
-        <button id="btn-satellite-${lid}" onclick="switchBase(${lid},'satellite')"
-          style="flex:1;padding:4px;font-size:10px;border-radius:5px;border:1px solid #00d4ff;background:#00d4ff;color:#000;cursor:pointer;font-weight:700;font-family:'Noto Sans JP',sans-serif">
-          🛰 衛星
-        </button>
-      </div>
-      <div style="font-size:9px;color:#64748b;margin-bottom:5px;font-weight:700">── ハザードマップ ──</div>
-      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">
-        <input type="checkbox" id="hz-flood-${lid}" style="cursor:pointer;accent-color:#3b82f6">
-        <span style="display:inline-block;width:10px;height:10px;background:#3b82f6;border-radius:2px;flex-shrink:0"></span>洪水浸水想定
-      </label>
-      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">
-        <input type="checkbox" id="hz-land-${lid}" style="cursor:pointer;accent-color:#f59e0b">
-        <span style="display:inline-block;width:10px;height:10px;background:#f59e0b;border-radius:2px;flex-shrink:0"></span>土砂災害
-      </label>
-      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:8px">
-        <input type="checkbox" id="hz-tsunami-${lid}" style="cursor:pointer;accent-color:#8b5cf6">
-        <span style="display:inline-block;width:10px;height:10px;background:#8b5cf6;border-radius:2px;flex-shrink:0"></span>津波浸水想定
-      </label>
-      <div style="font-size:9px;color:#64748b;margin-bottom:5px;font-weight:700">── 現在地 ──</div>
-      <button id="gps-btn-${lid}" onclick="startGPS(map)"
-        style="width:100%;margin-bottom:8px;padding:5px 4px;background:#1a2235;border:1px solid #2196f3;border-radius:6px;color:#94a3b8;font-size:10px;cursor:pointer;font-weight:700;font-family:'Noto Sans JP',sans-serif">
-        📍 現在地
-      </button>
-      <div style="font-size:9px;color:#64748b;margin-bottom:5px;font-weight:700">── 農地・地番 ──</div>
-      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">
-        <input type="checkbox" id="hz-nochi-${lid}" style="cursor:pointer;accent-color:#10b981">
-        <span style="display:inline-block;width:10px;height:10px;background:#10b981;border-radius:2px;flex-shrink:0"></span>農地ナビ
-      </label>
-      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:8px">
-        <input type="checkbox" id="hz-chiban-${lid}" style="cursor:pointer;accent-color:#f5c518">
-        <span style="display:inline-block;width:10px;height:10px;background:#f5c518;border-radius:2px;flex-shrink:0"></span>地番図
-      </label>
-      <div style="font-size:9px;color:#64748b;padding-top:6px;border-top:1px solid #1e2d45;font-weight:700;margin-bottom:4px">── 農振区分 ──</div>
-      <div style="font-size:10px;color:#e2e8f0;line-height:2">
-        <span style="background:#4ade80;padding:1px 6px;border-radius:3px;color:#000;font-weight:700">青地</span> 農振農用地<br>
-        <span style="background:#fff;padding:1px 6px;border-radius:3px;color:#000;font-weight:700;border:1px solid #888">白地</span> 農振除外可能性あり
-      </div>
-    `;
+    div.innerHTML = ''
+      + '<div style="font-size:10px;color:#00d4ff;font-weight:700;letter-spacing:1px;margin-bottom:8px;border-bottom:1px solid #1e2d45;padding-bottom:6px">🗺 レイヤー切替</div>'
+      + '<div style="font-size:9px;color:#64748b;margin-bottom:5px;font-weight:700">── 地図タイプ ──</div>'
+      + '<div style="display:flex;gap:4px;margin-bottom:8px">'
+      + '<button id="btn-normal-'+lid+'" onclick="switchBase('+lid+',\'normal\')" style="flex:1;padding:4px;font-size:10px;border-radius:5px;border:1px solid #1e2d45;background:#1a2235;color:#94a3b8;cursor:pointer;font-family:\'Noto Sans JP\',sans-serif">🗺 標準</button>'
+      + '<button id="btn-satellite-'+lid+'" onclick="switchBase('+lid+',\'satellite\')" style="flex:1;padding:4px;font-size:10px;border-radius:5px;border:1px solid #00d4ff;background:#00d4ff;color:#000;cursor:pointer;font-weight:700;font-family:\'Noto Sans JP\',sans-serif">🛰 衛星</button>'
+      + '</div>'
+      + '<div style="font-size:9px;color:#64748b;margin-bottom:5px;font-weight:700">── ハザードマップ ──</div>'
+      + '<label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px"><input type="checkbox" id="hz-flood-'+lid+'" style="cursor:pointer;accent-color:#3b82f6"><span style="display:inline-block;width:10px;height:10px;background:#3b82f6;border-radius:2px;flex-shrink:0"></span>洪水浸水想定</label>'
+      + '<label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px"><input type="checkbox" id="hz-land-'+lid+'" style="cursor:pointer;accent-color:#f59e0b"><span style="display:inline-block;width:10px;height:10px;background:#f59e0b;border-radius:2px;flex-shrink:0"></span>土砂災害</label>'
+      + '<label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:8px"><input type="checkbox" id="hz-tsunami-'+lid+'" style="cursor:pointer;accent-color:#8b5cf6"><span style="display:inline-block;width:10px;height:10px;background:#8b5cf6;border-radius:2px;flex-shrink:0"></span>津波浸水想定</label>'
+      + '<div style="font-size:9px;color:#64748b;margin-bottom:5px;font-weight:700">── 現在地 ──</div>'
+      + '<button id="gps-btn-'+lid+'" onclick="startGPS(map)" style="width:100%;margin-bottom:8px;padding:5px 4px;background:#1a2235;border:1px solid #2196f3;border-radius:6px;color:#94a3b8;font-size:10px;cursor:pointer;font-weight:700;font-family:\'Noto Sans JP\',sans-serif">📍 現在地</button>'
+      + '<div style="font-size:9px;color:#64748b;margin-bottom:5px;font-weight:700">── 農地・地番 ──</div>'
+      + '<label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px"><input type="checkbox" id="hz-nochi-'+lid+'" style="cursor:pointer;accent-color:#10b981"><span style="display:inline-block;width:10px;height:10px;background:#10b981;border-radius:2px;flex-shrink:0"></span>農地ナビ</label>'
+      + '<label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:8px"><input type="checkbox" id="hz-chiban-'+lid+'" style="cursor:pointer;accent-color:#f5c518"><span style="display:inline-block;width:10px;height:10px;background:#f5c518;border-radius:2px;flex-shrink:0"></span>地番図</label>'
+      + '<div style="font-size:9px;color:#64748b;padding-top:6px;border-top:1px solid #1e2d45;font-weight:700;margin-bottom:4px">── 農振区分 ──</div>'
+      + '<div style="font-size:10px;color:#e2e8f0;line-height:2"><span style="background:#4ade80;padding:1px 6px;border-radius:3px;color:#000;font-weight:700">青地</span> 農振農用地<br><span style="background:#fff;padding:1px 6px;border-radius:3px;color:#000;font-weight:700;border:1px solid #888">白地</span> 農振除外可能性あり</div>';
     L.DomEvent.disableClickPropagation(div);
     // チェックボックスのイベント
     setTimeout(function() {
@@ -1918,55 +1890,53 @@ function addHazardControl(map) {
   ctrl.onAdd = function() {
     var div = L.DomUtil.create('div');
     div.style.cssText = 'background:rgba(10,14,26,.95);border:1px solid #1e2d45;border-radius:10px;padding:12px 14px;min-width:190px;backdrop-filter:blur(8px);font-family:Noto Sans JP,sans-serif;box-shadow:0 4px 20px rgba(0,0,0,.5);max-height:90vh;overflow-y:auto';
-    div.innerHTML = `
-      <div style="font-size:10px;color:#00d4ff;font-weight:700;letter-spacing:1px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #1e2d45">🗺 レイヤー切替</div>
-
-      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:6px">── 地図タイプ ──</div>
-      <div style="display:flex;gap:6px;margin-bottom:10px">
-        <button id="btn-street" style="flex:1;padding:5px 4px;background:#1e2d45;border:1px solid #00d4ff;border-radius:6px;color:#00d4ff;font-size:10px;cursor:pointer;font-weight:700">🗺 標準</button>
-        <button id="btn-satellite" style="flex:1;padding:5px 4px;background:#00d4ff;border:1px solid #00d4ff;border-radius:6px;color:#000;font-size:10px;cursor:pointer;font-weight:700">🛰 衛星</button>
-      </div>
-
-      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:6px">── ハザードマップ ──</div>
-      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">
-        <input type="checkbox" id="hz-flood" style="cursor:pointer;accent-color:#3b82f6">
-        <span style="display:inline-block;width:10px;height:10px;background:linear-gradient(135deg,#ffff00,#ff8c00,#ff0000,#8b0000);border-radius:2px;flex-shrink:0"></span>洪水浸水想定
-      </label>
-      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">
-        <input type="checkbox" id="hz-dosha" style="cursor:pointer;accent-color:#f59e0b">
-        <span style="display:inline-block;width:10px;height:10px;background:linear-gradient(135deg,#ff8c00,#8b4513);border-radius:2px;flex-shrink:0"></span>土砂災害
-      </label>
-      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:10px">
-        <input type="checkbox" id="hz-tsunami" style="cursor:pointer;accent-color:#8b5cf6">
-        <span style="display:inline-block;width:10px;height:10px;background:linear-gradient(135deg,#ffccff,#ff00ff,#8b008b);border-radius:2px;flex-shrink:0"></span>津波浸水想定
-      </label>
-
-      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:6px">── 農地・地番 ──</div>
-      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">
-        <input type="checkbox" id="hz-nochi" style="cursor:pointer;accent-color:#10b981">
-        <span style="display:inline-block;width:10px;height:10px;background:#10b981;border-radius:2px;flex-shrink:0"></span>農地ナビ
-      </label>
-      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:10px">
-        <input type="checkbox" id="hz-chiban" style="cursor:pointer;accent-color:#f5c518">
-        <span style="display:inline-block;width:10px;height:10px;background:#f5c518;border-radius:2px;flex-shrink:0"></span>地番図
-      </label>
-
-      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:6px;padding-top:6px;border-top:1px solid #1e2d45">── 農振区分 ──</div>
-      <div style="font-size:10px;color:#e2e8f0;line-height:2">
-        <span style="background:#10b981;padding:1px 6px;border-radius:3px;color:#000;font-weight:700">青地</span> 農振農用地<br>
-        <span style="background:#fff;padding:1px 6px;border-radius:3px;color:#000;font-weight:700;border:1px solid #aaa">白地</span> 除外可能性あり
-      </div>
-
-      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:6px;margin-top:8px;padding-top:6px;border-top:1px solid #1e2d45">── 洪水浸水深 凡例 ──</div>
-      <div id="flood-legend" style="display:none;font-size:10px">
-        <div style="display:flex;align-items:center;gap:5px;margin-bottom:3px"><span style="display:inline-block;width:16px;height:10px;background:#8b0000;border-radius:2px"></span>20m以上</div>
-        <div style="display:flex;align-items:center;gap:5px;margin-bottom:3px"><span style="display:inline-block;width:16px;height:10px;background:#ff0000;border-radius:2px"></span>10〜20m</div>
-        <div style="display:flex;align-items:center;gap:5px;margin-bottom:3px"><span style="display:inline-block;width:16px;height:10px;background:#ff8c00;border-radius:2px"></span>5〜10m</div>
-        <div style="display:flex;align-items:center;gap:5px;margin-bottom:3px"><span style="display:inline-block;width:16px;height:10px;background:#ffcc00;border-radius:2px"></span>3〜5m</div>
-        <div style="display:flex;align-items:center;gap:5px;margin-bottom:3px"><span style="display:inline-block;width:16px;height:10px;background:#ffff99;border-radius:2px"></span>0.5〜3m</div>
-        <div style="display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:16px;height:10px;background:#aaddff;border-radius:2px"></span>0〜0.5m</div>
-      </div>
-    `;
+    div.innerHTML = '      <div style="font-size:10px;color:#00d4ff;font-weight:700;letter-spacing:1px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #1e2d45">🗺 レイヤー切替</div>'
+      + ''
+      + '      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:6px">── 地図タイプ ──</div>'
+      + '      <div style="display:flex;gap:6px;margin-bottom:10px">'
+      + '        <button id="btn-street" style="flex:1;padding:5px 4px;background:#1e2d45;border:1px solid #00d4ff;border-radius:6px;color:#00d4ff;font-size:10px;cursor:pointer;font-weight:700">🗺 標準</button>'
+      + '        <button id="btn-satellite" style="flex:1;padding:5px 4px;background:#00d4ff;border:1px solid #00d4ff;border-radius:6px;color:#000;font-size:10px;cursor:pointer;font-weight:700">🛰 衛星</button>'
+      + '      </div>'
+      + ''
+      + '      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:6px">── ハザードマップ ──</div>'
+      + '      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">'
+      + '        <input type="checkbox" id="hz-flood" style="cursor:pointer;accent-color:#3b82f6">'
+      + '        <span style="display:inline-block;width:10px;height:10px;background:linear-gradient(135deg,#ffff00,#ff8c00,#ff0000,#8b0000);border-radius:2px;flex-shrink:0"></span>洪水浸水想定'
+      + '      </label>'
+      + '      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">'
+      + '        <input type="checkbox" id="hz-dosha" style="cursor:pointer;accent-color:#f59e0b">'
+      + '        <span style="display:inline-block;width:10px;height:10px;background:linear-gradient(135deg,#ff8c00,#8b4513);border-radius:2px;flex-shrink:0"></span>土砂災害'
+      + '      </label>'
+      + '      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:10px">'
+      + '        <input type="checkbox" id="hz-tsunami" style="cursor:pointer;accent-color:#8b5cf6">'
+      + '        <span style="display:inline-block;width:10px;height:10px;background:linear-gradient(135deg,#ffccff,#ff00ff,#8b008b);border-radius:2px;flex-shrink:0"></span>津波浸水想定'
+      + '      </label>'
+      + ''
+      + '      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:6px">── 農地・地番 ──</div>'
+      + '      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">'
+      + '        <input type="checkbox" id="hz-nochi" style="cursor:pointer;accent-color:#10b981">'
+      + '        <span style="display:inline-block;width:10px;height:10px;background:#10b981;border-radius:2px;flex-shrink:0"></span>農地ナビ'
+      + '      </label>'
+      + '      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:10px">'
+      + '        <input type="checkbox" id="hz-chiban" style="cursor:pointer;accent-color:#f5c518">'
+      + '        <span style="display:inline-block;width:10px;height:10px;background:#f5c518;border-radius:2px;flex-shrink:0"></span>地番図'
+      + '      </label>'
+      + ''
+      + '      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:6px;padding-top:6px;border-top:1px solid #1e2d45">── 農振区分 ──</div>'
+      + '      <div style="font-size:10px;color:#e2e8f0;line-height:2">'
+      + '        <span style="background:#10b981;padding:1px 6px;border-radius:3px;color:#000;font-weight:700">青地</span> 農振農用地<br>'
+      + '        <span style="background:#fff;padding:1px 6px;border-radius:3px;color:#000;font-weight:700;border:1px solid #aaa">白地</span> 除外可能性あり'
+      + '      </div>'
+      + ''
+      + '      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:6px;margin-top:8px;padding-top:6px;border-top:1px solid #1e2d45">── 洪水浸水深 凡例 ──</div>'
+      + '      <div id="flood-legend" style="display:none;font-size:10px">'
+      + '        <div style="display:flex;align-items:center;gap:5px;margin-bottom:3px"><span style="display:inline-block;width:16px;height:10px;background:#8b0000;border-radius:2px"></span>20m以上</div>'
+      + '        <div style="display:flex;align-items:center;gap:5px;margin-bottom:3px"><span style="display:inline-block;width:16px;height:10px;background:#ff0000;border-radius:2px"></span>10〜20m</div>'
+      + '        <div style="display:flex;align-items:center;gap:5px;margin-bottom:3px"><span style="display:inline-block;width:16px;height:10px;background:#ff8c00;border-radius:2px"></span>5〜10m</div>'
+      + '        <div style="display:flex;align-items:center;gap:5px;margin-bottom:3px"><span style="display:inline-block;width:16px;height:10px;background:#ffcc00;border-radius:2px"></span>3〜5m</div>'
+      + '        <div style="display:flex;align-items:center;gap:5px;margin-bottom:3px"><span style="display:inline-block;width:16px;height:10px;background:#ffff99;border-radius:2px"></span>0.5〜3m</div>'
+      + '        <div style="display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:16px;height:10px;background:#aaddff;border-radius:2px"></span>0〜0.5m</div>'
+      + '      </div>';
     L.DomEvent.disableClickPropagation(div);
     L.DomEvent.disableScrollPropagation(div);
 
@@ -3807,45 +3777,43 @@ function addHazardControl(map) {
   ctrl.onAdd = function() {
     var div = L.DomUtil.create('div');
     div.style.cssText = 'background:rgba(10,14,26,.95);border:1px solid #1e2d45;border-radius:10px;padding:12px 14px;min-width:175px;backdrop-filter:blur(8px);font-family:Noto Sans JP,sans-serif;box-shadow:0 4px 20px rgba(0,0,0,.5)';
-    div.innerHTML = `
-      <div style="font-size:10px;color:#00d4ff;font-weight:700;letter-spacing:1px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #1e2d45">🗺 レイヤー切替</div>
-
-      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:6px">── 地図タイプ ──</div>
-      <div style="display:flex;gap:6px;margin-bottom:10px">
-        <button id="btn-street" style="flex:1;padding:5px 4px;background:#1e2d45;border:1px solid #00d4ff;border-radius:6px;color:#00d4ff;font-size:10px;cursor:pointer;font-weight:700">⬅ 標準</button>
-        <button id="btn-satellite" style="flex:1;padding:5px 4px;background:#00d4ff;border:1px solid #00d4ff;border-radius:6px;color:#000;font-size:10px;cursor:pointer;font-weight:700">衛星 ✓</button>
-      </div>
-
-      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:6px">── ハザードマップ ──</div>
-      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">
-        <input type="checkbox" id="hz-flood" style="cursor:pointer;accent-color:#3b82f6">
-        <span style="display:inline-block;width:10px;height:10px;background:#3b82f6;border-radius:2px;flex-shrink:0"></span>洪水浸水想定
-      </label>
-      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">
-        <input type="checkbox" id="hz-land" style="cursor:pointer;accent-color:#f59e0b">
-        <span style="display:inline-block;width:10px;height:10px;background:#f59e0b;border-radius:2px;flex-shrink:0"></span>土砂災害
-      </label>
-      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:10px">
-        <input type="checkbox" id="hz-tsunami" style="cursor:pointer;accent-color:#8b5cf6">
-        <span style="display:inline-block;width:10px;height:10px;background:#8b5cf6;border-radius:2px;flex-shrink:0"></span>津波浸水想定
-      </label>
-
-      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:6px">── 農地・地番 ──</div>
-      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">
-        <input type="checkbox" id="hz-nochi" style="cursor:pointer;accent-color:#10b981">
-        <span style="display:inline-block;width:10px;height:10px;background:#10b981;border-radius:2px;flex-shrink:0"></span>農地ナビ
-      </label>
-      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:10px">
-        <input type="checkbox" id="hz-chiban" style="cursor:pointer;accent-color:#f5c518">
-        <span style="display:inline-block;width:10px;height:10px;background:#f5c518;border-radius:2px;flex-shrink:0"></span>地番図
-      </label>
-
-      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:5px;padding-top:6px;border-top:1px solid #1e2d45">── 農振区分 ──</div>
-      <div style="font-size:10px;color:#e2e8f0;line-height:2">
-        <span style="background:#10b981;padding:1px 6px;border-radius:3px;color:#000;font-weight:700">青地</span> 農振農用地<br>
-        <span style="background:#fff;padding:1px 6px;border-radius:3px;color:#000;font-weight:700;border:1px solid #aaa">白地</span> 除外可能性あり
-      </div>
-    `;
+    div.innerHTML = '      <div style="font-size:10px;color:#00d4ff;font-weight:700;letter-spacing:1px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #1e2d45">🗺 レイヤー切替</div>'
+      + ''
+      + '      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:6px">── 地図タイプ ──</div>'
+      + '      <div style="display:flex;gap:6px;margin-bottom:10px">'
+      + '        <button id="btn-street" style="flex:1;padding:5px 4px;background:#1e2d45;border:1px solid #00d4ff;border-radius:6px;color:#00d4ff;font-size:10px;cursor:pointer;font-weight:700">⬅ 標準</button>'
+      + '        <button id="btn-satellite" style="flex:1;padding:5px 4px;background:#00d4ff;border:1px solid #00d4ff;border-radius:6px;color:#000;font-size:10px;cursor:pointer;font-weight:700">衛星 ✓</button>'
+      + '      </div>'
+      + ''
+      + '      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:6px">── ハザードマップ ──</div>'
+      + '      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">'
+      + '        <input type="checkbox" id="hz-flood" style="cursor:pointer;accent-color:#3b82f6">'
+      + '        <span style="display:inline-block;width:10px;height:10px;background:#3b82f6;border-radius:2px;flex-shrink:0"></span>洪水浸水想定'
+      + '      </label>'
+      + '      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">'
+      + '        <input type="checkbox" id="hz-land" style="cursor:pointer;accent-color:#f59e0b">'
+      + '        <span style="display:inline-block;width:10px;height:10px;background:#f59e0b;border-radius:2px;flex-shrink:0"></span>土砂災害'
+      + '      </label>'
+      + '      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:10px">'
+      + '        <input type="checkbox" id="hz-tsunami" style="cursor:pointer;accent-color:#8b5cf6">'
+      + '        <span style="display:inline-block;width:10px;height:10px;background:#8b5cf6;border-radius:2px;flex-shrink:0"></span>津波浸水想定'
+      + '      </label>'
+      + ''
+      + '      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:6px">── 農地・地番 ──</div>'
+      + '      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">'
+      + '        <input type="checkbox" id="hz-nochi" style="cursor:pointer;accent-color:#10b981">'
+      + '        <span style="display:inline-block;width:10px;height:10px;background:#10b981;border-radius:2px;flex-shrink:0"></span>農地ナビ'
+      + '      </label>'
+      + '      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:10px">'
+      + '        <input type="checkbox" id="hz-chiban" style="cursor:pointer;accent-color:#f5c518">'
+      + '        <span style="display:inline-block;width:10px;height:10px;background:#f5c518;border-radius:2px;flex-shrink:0"></span>地番図'
+      + '      </label>'
+      + ''
+      + '      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:5px;padding-top:6px;border-top:1px solid #1e2d45">── 農振区分 ──</div>'
+      + '      <div style="font-size:10px;color:#e2e8f0;line-height:2">'
+      + '        <span style="background:#10b981;padding:1px 6px;border-radius:3px;color:#000;font-weight:700">青地</span> 農振農用地<br>'
+      + '        <span style="background:#fff;padding:1px 6px;border-radius:3px;color:#000;font-weight:700;border:1px solid #aaa">白地</span> 除外可能性あり'
+      + '      </div>';
     L.DomEvent.disableClickPropagation(div);
     L.DomEvent.disableScrollPropagation(div);
 
@@ -4750,43 +4718,41 @@ function addHazardControl(map) {
   ctrl.onAdd = function() {
     var div = L.DomUtil.create('div');
     div.style.cssText = 'background:rgba(10,14,26,.95);border:1px solid #1e2d45;border-radius:10px;padding:12px 14px;min-width:170px;backdrop-filter:blur(8px);font-family:Noto Sans JP,sans-serif;box-shadow:0 4px 20px rgba(0,0,0,.5)';
-    div.innerHTML = `
-      <div style="font-size:10px;color:#00d4ff;font-weight:700;letter-spacing:1px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #1e2d45">🗺 レイヤー切替</div>
-
-      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:6px">── 地図の種類 ──</div>
-      <div style="display:flex;gap:6px;margin-bottom:10px">
-        <button id="btn-street" style="flex:1;padding:5px 4px;background:#1e2d45;border:1px solid #00d4ff;border-radius:6px;color:#00d4ff;font-size:10px;cursor:pointer;font-weight:700">地図</button>
-        <button id="btn-satellite" style="flex:1;padding:5px 4px;background:#00d4ff;border:1px solid #00d4ff;border-radius:6px;color:#000;font-size:10px;cursor:pointer;font-weight:700">衛星</button>
-      </div>
-
-      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:6px">── ハザードマップ ──</div>
-      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">
-        <input type="checkbox" id="hz-flood" style="cursor:pointer;accent-color:#3b82f6"><span style="display:inline-block;width:10px;height:10px;background:#3b82f6;border-radius:2px;flex-shrink:0"></span>洪水浸水想定
-      </label>
-      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">
-        <input type="checkbox" id="hz-land" style="cursor:pointer;accent-color:#f59e0b"><span style="display:inline-block;width:10px;height:10px;background:#f59e0b;border-radius:2px;flex-shrink:0"></span>土砂災害
-      </label>
-      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">
-        <input type="checkbox" id="hz-tsunami" style="cursor:pointer;accent-color:#8b5cf6"><span style="display:inline-block;width:10px;height:10px;background:#8b5cf6;border-radius:2px;flex-shrink:0"></span>津波浸水想定
-      </label>
-      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:10px">
-        <input type="checkbox" id="hz-hightide" style="cursor:pointer;accent-color:#06b6d4"><span style="display:inline-block;width:10px;height:10px;background:#06b6d4;border-radius:2px;flex-shrink:0"></span>高潮浸水想定
-      </label>
-
-      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:6px">── 農地・地番 ──</div>
-      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">
-        <input type="checkbox" id="hz-nochi" style="cursor:pointer;accent-color:#10b981"><span style="display:inline-block;width:10px;height:10px;background:#10b981;border-radius:2px;flex-shrink:0"></span>農地（農振）
-      </label>
-      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:10px">
-        <input type="checkbox" id="hz-chiban" style="cursor:pointer;accent-color:#f5c518"><span style="display:inline-block;width:10px;height:10px;background:#f5c518;border-radius:2px;flex-shrink:0"></span>地番図
-      </label>
-
-      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:5px;padding-top:6px;border-top:1px solid #1e2d45">── 農振区分 ──</div>
-      <div style="font-size:10px;color:#e2e8f0;line-height:2">
-        <span style="background:#10b981;padding:1px 6px;border-radius:3px;color:#000;font-weight:700">青地</span> 農振農用地<br>
-        <span style="background:#fff;padding:1px 6px;border-radius:3px;color:#000;font-weight:700;border:1px solid #aaa">白地</span> 除外可能性あり
-      </div>
-    `;
+    div.innerHTML = '      <div style="font-size:10px;color:#00d4ff;font-weight:700;letter-spacing:1px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #1e2d45">🗺 レイヤー切替</div>'
+      + ''
+      + '      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:6px">── 地図の種類 ──</div>'
+      + '      <div style="display:flex;gap:6px;margin-bottom:10px">'
+      + '        <button id="btn-street" style="flex:1;padding:5px 4px;background:#1e2d45;border:1px solid #00d4ff;border-radius:6px;color:#00d4ff;font-size:10px;cursor:pointer;font-weight:700">地図</button>'
+      + '        <button id="btn-satellite" style="flex:1;padding:5px 4px;background:#00d4ff;border:1px solid #00d4ff;border-radius:6px;color:#000;font-size:10px;cursor:pointer;font-weight:700">衛星</button>'
+      + '      </div>'
+      + ''
+      + '      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:6px">── ハザードマップ ──</div>'
+      + '      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">'
+      + '        <input type="checkbox" id="hz-flood" style="cursor:pointer;accent-color:#3b82f6"><span style="display:inline-block;width:10px;height:10px;background:#3b82f6;border-radius:2px;flex-shrink:0"></span>洪水浸水想定'
+      + '      </label>'
+      + '      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">'
+      + '        <input type="checkbox" id="hz-land" style="cursor:pointer;accent-color:#f59e0b"><span style="display:inline-block;width:10px;height:10px;background:#f59e0b;border-radius:2px;flex-shrink:0"></span>土砂災害'
+      + '      </label>'
+      + '      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">'
+      + '        <input type="checkbox" id="hz-tsunami" style="cursor:pointer;accent-color:#8b5cf6"><span style="display:inline-block;width:10px;height:10px;background:#8b5cf6;border-radius:2px;flex-shrink:0"></span>津波浸水想定'
+      + '      </label>'
+      + '      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:10px">'
+      + '        <input type="checkbox" id="hz-hightide" style="cursor:pointer;accent-color:#06b6d4"><span style="display:inline-block;width:10px;height:10px;background:#06b6d4;border-radius:2px;flex-shrink:0"></span>高潮浸水想定'
+      + '      </label>'
+      + ''
+      + '      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:6px">── 農地・地番 ──</div>'
+      + '      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:5px">'
+      + '        <input type="checkbox" id="hz-nochi" style="cursor:pointer;accent-color:#10b981"><span style="display:inline-block;width:10px;height:10px;background:#10b981;border-radius:2px;flex-shrink:0"></span>農地（農振）'
+      + '      </label>'
+      + '      <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:#e2e8f0;cursor:pointer;margin-bottom:10px">'
+      + '        <input type="checkbox" id="hz-chiban" style="cursor:pointer;accent-color:#f5c518"><span style="display:inline-block;width:10px;height:10px;background:#f5c518;border-radius:2px;flex-shrink:0"></span>地番図'
+      + '      </label>'
+      + ''
+      + '      <div style="font-size:9px;color:#64748b;font-weight:700;margin-bottom:5px;padding-top:6px;border-top:1px solid #1e2d45">── 農振区分 ──</div>'
+      + '      <div style="font-size:10px;color:#e2e8f0;line-height:2">'
+      + '        <span style="background:#10b981;padding:1px 6px;border-radius:3px;color:#000;font-weight:700">青地</span> 農振農用地<br>'
+      + '        <span style="background:#fff;padding:1px 6px;border-radius:3px;color:#000;font-weight:700;border:1px solid #aaa">白地</span> 除外可能性あり'
+      + '      </div>';
     L.DomEvent.disableClickPropagation(div);
     L.DomEvent.disableScrollPropagation(div);
 
