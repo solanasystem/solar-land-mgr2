@@ -1802,18 +1802,15 @@ URL: ${url}
 }
 
 function fieldRow(label, id, val, placeholder, options) {
+  var s = 'background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:6px;font-size:12px';
+  var wrap = '<div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:11px;color:var(--text3)">' + label + '</label>';
   if (options) {
-    return `<div style="display:flex;flex-direction:column;gap:4px">
-      <label style="font-size:11px;color:var(--text3)">${label}</label>
-      <select id="${id}" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:6px;font-size:12px">
-        ${options.map(o=>`<option ${String(val)===o?'selected':''}>${o}</option>`).join('')}
-      </select></div>`;
+    var opts = options.map(function(o){ return '<option' + (String(val)===o?' selected':'') + '>' + o + '</option>'; }).join('');
+    return wrap + '<select id="' + id + '" style="' + s + '">' + opts + '</select></div>';
   }
-  return `<div style="display:flex;flex-direction:column;gap:4px">
-    <label style="font-size:11px;color:var(--text3)">${label}</label>
-    <input id="${id}" value="${String(val||'').replace(/"/g,'&quot;')}" placeholder="${placeholder||''}"
-      style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:6px;font-size:12px">
-    </div>`;
+  var v = String(val||'').replace(/"/g,'&quot;');
+  var p = placeholder||'';
+  return wrap + '<input id="' + id + '" value="' + v + '" placeholder="' + p + '" style="' + s + '"></div>';
 }
 
 async function saveImportedRecord() {
@@ -2773,18 +2770,15 @@ URL: ${url}
 }
 
 function fieldRow(label, id, val, placeholder, options) {
+  var s = 'background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:6px;font-size:12px';
+  var wrap = '<div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:11px;color:var(--text3)">' + label + '</label>';
   if (options) {
-    return `<div style="display:flex;flex-direction:column;gap:4px">
-      <label style="font-size:11px;color:var(--text3)">${label}</label>
-      <select id="${id}" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:6px;font-size:12px">
-        ${options.map(o=>`<option ${String(val)===o?'selected':''}>${o}</option>`).join('')}
-      </select></div>`;
+    var opts = options.map(function(o){ return '<option' + (String(val)===o?' selected':'') + '>' + o + '</option>'; }).join('');
+    return wrap + '<select id="' + id + '" style="' + s + '">' + opts + '</select></div>';
   }
-  return `<div style="display:flex;flex-direction:column;gap:4px">
-    <label style="font-size:11px;color:var(--text3)">${label}</label>
-    <input id="${id}" value="${String(val||'').replace(/"/g,'&quot;')}" placeholder="${placeholder||''}"
-      style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:6px;font-size:12px">
-    </div>`;
+  var v = String(val||'').replace(/"/g,'&quot;');
+  var p = placeholder||'';
+  return wrap + '<input id="' + id + '" value="' + v + '" placeholder="' + p + '" style="' + s + '"></div>';
 }
 
 async function saveImportedRecord() {
@@ -3698,18 +3692,15 @@ URL: ${url}
 }
 
 function fieldRow(label, id, val, placeholder, options) {
+  var s = 'background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:6px;font-size:12px';
+  var wrap = '<div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:11px;color:var(--text3)">' + label + '</label>';
   if (options) {
-    return `<div style="display:flex;flex-direction:column;gap:4px">
-      <label style="font-size:11px;color:var(--text3)">${label}</label>
-      <select id="${id}" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:6px;font-size:12px">
-        ${options.map(o=>`<option ${String(val)===o?'selected':''}>${o}</option>`).join('')}
-      </select></div>`;
+    var opts = options.map(function(o){ return '<option' + (String(val)===o?' selected':'') + '>' + o + '</option>'; }).join('');
+    return wrap + '<select id="' + id + '" style="' + s + '">' + opts + '</select></div>';
   }
-  return `<div style="display:flex;flex-direction:column;gap:4px">
-    <label style="font-size:11px;color:var(--text3)">${label}</label>
-    <input id="${id}" value="${String(val||'').replace(/"/g,'&quot;')}" placeholder="${placeholder||''}"
-      style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:6px;font-size:12px">
-    </div>`;
+  var v = String(val||'').replace(/"/g,'&quot;');
+  var p = placeholder||'';
+  return wrap + '<input id="' + id + '" value="' + v + '" placeholder="' + p + '" style="' + s + '"></div>';
 }
 
 async function saveImportedRecord() {
@@ -4647,18 +4638,15 @@ URL: ${url}
 }
 
 function fieldRow(label, id, val, placeholder, options) {
+  var s = 'background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:6px;font-size:12px';
+  var wrap = '<div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:11px;color:var(--text3)">' + label + '</label>';
   if (options) {
-    return `<div style="display:flex;flex-direction:column;gap:4px">
-      <label style="font-size:11px;color:var(--text3)">${label}</label>
-      <select id="${id}" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:6px;font-size:12px">
-        ${options.map(o=>`<option ${String(val)===o?'selected':''}>${o}</option>`).join('')}
-      </select></div>`;
+    var opts = options.map(function(o){ return '<option' + (String(val)===o?' selected':'') + '>' + o + '</option>'; }).join('');
+    return wrap + '<select id="' + id + '" style="' + s + '">' + opts + '</select></div>';
   }
-  return `<div style="display:flex;flex-direction:column;gap:4px">
-    <label style="font-size:11px;color:var(--text3)">${label}</label>
-    <input id="${id}" value="${String(val||'').replace(/"/g,'&quot;')}" placeholder="${placeholder||''}"
-      style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:6px;font-size:12px">
-    </div>`;
+  var v = String(val||'').replace(/"/g,'&quot;');
+  var p = placeholder||'';
+  return wrap + '<input id="' + id + '" value="' + v + '" placeholder="' + p + '" style="' + s + '"></div>';
 }
 
 async function saveImportedRecord() {
@@ -5602,18 +5590,15 @@ URL: ${url}
 }
 
 function fieldRow(label, id, val, placeholder, options) {
+  var s = 'background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:6px;font-size:12px';
+  var wrap = '<div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:11px;color:var(--text3)">' + label + '</label>';
   if (options) {
-    return `<div style="display:flex;flex-direction:column;gap:4px">
-      <label style="font-size:11px;color:var(--text3)">${label}</label>
-      <select id="${id}" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:6px;font-size:12px">
-        ${options.map(o=>`<option ${String(val)===o?'selected':''}>${o}</option>`).join('')}
-      </select></div>`;
+    var opts = options.map(function(o){ return '<option' + (String(val)===o?' selected':'') + '>' + o + '</option>'; }).join('');
+    return wrap + '<select id="' + id + '" style="' + s + '">' + opts + '</select></div>';
   }
-  return `<div style="display:flex;flex-direction:column;gap:4px">
-    <label style="font-size:11px;color:var(--text3)">${label}</label>
-    <input id="${id}" value="${String(val||'').replace(/"/g,'&quot;')}" placeholder="${placeholder||''}"
-      style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:7px;border-radius:6px;font-size:12px">
-    </div>`;
+  var v = String(val||'').replace(/"/g,'&quot;');
+  var p = placeholder||'';
+  return wrap + '<input id="' + id + '" value="' + v + '" placeholder="' + p + '" style="' + s + '"></div>';
 }
 
 async function saveImportedRecord() {
